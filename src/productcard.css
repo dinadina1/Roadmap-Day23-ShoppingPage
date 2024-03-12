@@ -1,0 +1,63 @@
+.card {
+    width: 100%;
+    height: auto;
+    background-color: rgb(95, 95, 96);
+    color: whitesmoke;
+}
+
+.card-header {
+    padding: 0;
+    position: relative;
+}
+
+.card-header .sale_text {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: black;
+    color: whitesmoke;
+    padding: 1px 5px 1px 5px;
+    border-radius: 5px;
+    margin: 5px 5px 0 0;
+    font-size: 14px;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+}
+
+.card_oldprice {
+    text-decoration: line-through;
+    margin-right: 10px;
+}
+
+.product_price {
+    font-weight: bold;
+}
+
+.card .card-img {
+    width: 100%;
+    height: 200px;
+}
+
+.addCart_button,
+.removeCart_button {
+    background-color: rgba(43, 48, 53, 1);
+    color: whitesmoke;
+    padding: 7px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 10px;
+    border: 1px solid white;
+    text-shadow: black;
+}
+
+.addCart_button:hover,
+.removeCart_button:hover {
+    background-color: rgb(39, 38, 38);
+
+}
