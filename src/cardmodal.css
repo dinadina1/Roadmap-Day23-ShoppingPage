@@ -1,0 +1,21 @@
+.cart-list{
+    list-style-type: none;
+}
+.cart-list .cart_lists{
+    padding-top: 5px;
+}
+.cart-list li{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+.cart-list img{
+    height: 50px;
+    width: 50px;
+}
+.cart-list .delete_button{
+    height: 25px;
+    width: 25px;
+    color: red;
+    cursor: pointer;
+}

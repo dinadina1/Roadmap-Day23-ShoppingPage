@@ -34,7 +34,8 @@ function App() {
       product_price: 1999,
       product_oldprice: 4999,
       button: true,
-      sale: false
+      sale: false,
+      quantity: 1
     },
     {
       id: 2,
@@ -43,7 +44,8 @@ function App() {
       product_ratings: 2,
       product_price: 2999,
       button: true,
-      sale: true
+      sale: true,
+      quantity: 1
     },
     {
       id: 3,
@@ -53,7 +55,8 @@ function App() {
       product_price: 3999,
       product_oldprice: 7999,
       button: true,
-      sale: false
+      sale: false,
+      quantity: 1
     },
     {
       id: 4,
@@ -62,7 +65,8 @@ function App() {
       product_ratings: 5,
       product_price: 1599,
       button: true,
-      sale: true
+      sale: true,
+      quantity: 1
     },
     {
       id: 5,
@@ -72,7 +76,8 @@ function App() {
       product_price: 299,
       product_oldprice: 699,
       button: true,
-      sale: true
+      sale: true,
+      quantity: 1
     },
     {
       id: 6,
@@ -81,7 +86,8 @@ function App() {
       product_ratings: 4,
       product_price: 6999,
       button: true,
-      sale: true
+      sale: true,
+      quantity: 1
     },
     {
       id: 7,
@@ -91,7 +97,8 @@ function App() {
       product_price: 3999,
       product_oldprice: 6999,
       button: true,
-      sale: false
+      sale: false,
+      quantity: 1
     },
     {
       id: 8,
@@ -100,7 +107,8 @@ function App() {
       product_ratings: 5,
       product_price: 1299,
       button: true,
-      sale: true
+      sale: true,
+      quantity: 1
     },
     {
       id: 9,
@@ -109,7 +117,8 @@ function App() {
       product_ratings: 4,
       product_price: 499,
       button: true,
-      sale: false
+      sale: false,
+      quantity: 1
     },
     {
       id: 10,
@@ -119,7 +128,8 @@ function App() {
       product_price: 599,
       product_oldprice: 999,
       button: true,
-      sale: true
+      sale: true,
+      quantity: 1
     },
     {
       id: 11,
@@ -128,7 +138,8 @@ function App() {
       product_ratings: 5,
       product_price: 7999,
       button: true,
-      sale: false
+      sale: false,
+      quantity: 1
     },
     {
       id: 12,
@@ -138,12 +149,16 @@ function App() {
       product_price: 4999,
       product_oldprice: 5999,
       button: true,
-      sale: true
+      sale: true,
+      quantity: 1
     }
   ])
 
   // State for cart count
-  const [cartCount, setCartCount] = useState(0)
+  const [cartCount, setCartCount] = useState(0);
+
+  //State for Cart List
+  const [cart, addCart] = useState([]);
 
   // Function to add cart item
   let handleClick = (id) => {
@@ -152,6 +167,16 @@ function App() {
     })
     setCardInfo(item_check);
     setCartCount(cartCount + 1)
+
+    // Add item into Cart Modal
+    let modal_info = cardInfo.filter((item) => {
+      if (item.id == id) {
+        return item
+      }
+    })
+    let modal_arr = [];
+    modal_arr.push(...cart, ...modal_info)
+    addCart(modal_arr)
   }
 
   // Function to remove cart item
@@ -160,12 +185,36 @@ function App() {
       return item.id == id ? { ...item, button: !item.button } : item
     })
     setCardInfo(item_check1);
-    setCartCount(cartCount - 1)
+    setCartCount(cartCount - 1);
+
+
+    // Remove item into cart Modal
+    let remove_cartList = cart.filter((item) => {
+      return item.id == id ? "" : item
+    })
+    addCart(remove_cartList)
+  }
+
+  // Remove item from cart Modal
+  let removeCart = (ids) => {
+    let remove_cartList = cart.filter((item) => {
+      return item.id == ids ? "" : item
+    })
+    addCart(remove_cartList)
+    handleClickLess(ids)
+  }
+
+  // Increase cart item quantity
+  let increase_CartQuantity = () => {
+  }
+
+  // Decrease cart item quantity
+  let decrease_CartQuantity = () => {
   }
 
   return (
     <>
-      <NavBar cartCount={cartCount} />
+      <NavBar cartCount={cartCount} cart={cart} removeCart={removeCart} increase_CartQuantity={increase_CartQuantity} decrease_CartQuantity={decrease_CartQuantity} />
       <Shoppingbanner />
       <Cardcollection cardInfo={cardInfo} handleClick={handleClick} handleClickLess={handleClickLess} />
       <Footer />
