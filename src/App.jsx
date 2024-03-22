@@ -160,6 +160,12 @@ function App() {
   //State for Cart List
   const [cart, addCart] = useState([]);
 
+  // State for total cart price
+  const [total_price, setTotal_Price] = useState(0)
+
+  // State for Cart Quantity
+  const [cartQuantity, setCartQuantity] = useState(0)
+
   // Function to add cart item
   let handleClick = (id) => {
     let item_check = cardInfo.map((item) => {
@@ -202,21 +208,80 @@ function App() {
     })
     addCart(remove_cartList)
     handleClickLess(ids)
+
+    let filter = cart.filter((product) => product.id != ids)
+    let tot = filter.reduce((acc, product) => acc + product.product_price, 0)
+    setTotal_Price(tot)
+
+    // Reduce total quantity when removing product from the cart
+    let tot_quantity = cart.filter((product) => {
+      return product.id == ids && product;
+    })
+    let totalQuan = tot_quantity[0].quantity
+
+    setCartQuantity(cartQuantity - totalQuan)
   }
 
   // Increase cart item quantity
-  let increase_CartQuantity = () => {
+  let increase_CartQuantity = (datas) => {
+    let data = datas.split(",")
+    let [id, quan, price] = [...data]
+    let fixed_price = (parseInt(price) / parseInt(quan))
+    let quans = parseInt(quan) + 1;
+    let prices = parseInt(quans * fixed_price);
+    let cartQuan = cart.map((product) => {
+      return product.id == id ? { ...product, product_price: prices, quantity: quans } : product
+    })
+    addCart(cartQuan)
+
+    // Add total price when increase every product quantity
+    setTotal_Price(total_price + fixed_price)
+
+    // Add total quantity when increase every product quantity
+    setCartQuantity(cartQuantity + 1)
   }
 
   // Decrease cart item quantity
-  let decrease_CartQuantity = () => {
+  let decrease_CartQuantity = (datas) => {
+    let data = datas.split(",")
+    let [id, quan, price] = [...data]
+    let fixed_price = (parseInt(price) / parseInt(quan))
+    let quans = parseInt(quan) - 1;
+    if (quans > 0) {
+      let prices = parseInt(quans * fixed_price);
+      let cartQuan = cart.map((product) => {
+        return product.id == id ? { ...product, product_price: prices, quantity: quans } : product
+      })
+      addCart(cartQuan)
+
+      // Less total price when decrease every product quantity
+      setTotal_Price(total_price - fixed_price)
+
+      // Less total quantity when decrease every product quantity
+      setCartQuantity(cartQuantity - 1)
+    }
   }
+
 
   return (
     <>
-      <NavBar cartCount={cartCount} cart={cart} removeCart={removeCart} increase_CartQuantity={increase_CartQuantity} decrease_CartQuantity={decrease_CartQuantity} />
+      <NavBar
+        cartCount={cartCount}
+        cart={cart}
+        removeCart={removeCart}
+        increase_CartQuantity={increase_CartQuantity}
+        decrease_CartQuantity={decrease_CartQuantity}
+        total_price={total_price}
+        setTotal_Price={setTotal_Price}
+        cartQuantity={cartQuantity}
+        setCartQuantity={setCartQuantity}
+      />
       <Shoppingbanner />
-      <Cardcollection cardInfo={cardInfo} handleClick={handleClick} handleClickLess={handleClickLess} />
+      <Cardcollection
+        cardInfo={cardInfo}
+        handleClick={handleClick}
+        handleClickLess={handleClickLess}
+      />
       <Footer />
     </>
 

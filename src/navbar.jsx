@@ -4,14 +4,11 @@ import '/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'
 import React from 'react'
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 import "./navbar.css"
 import Cartmodal from "./cartmodal";
 
-function Navbar({ cartCount, cart, removeCart, increase_CartQuantity, decrease_CartQuantity }) {
-
-  // State for total cart price
-  const [total_price, setTotal_Price] = useState(0)
+function Navbar({ cartCount, cart, removeCart, increase_CartQuantity, decrease_CartQuantity,
+  total_price, setTotal_Price, cartQuantity, setCartQuantity }) {
 
   const [show, setShow] = useState(false);
 
@@ -25,15 +22,10 @@ function Navbar({ cartCount, cart, removeCart, increase_CartQuantity, decrease_C
       let tot = cart.reduce((acc, product) => acc + product.product_price, 0)
       setTotal_Price(tot)
     }
+
+    let tot_quantity = cart.reduce((acc, product) => acc + product.quantity, 0)
+    setCartQuantity(tot_quantity)
   };
-
-  // Find total Cart Price when remove item from cart
-  let lessTotal_Cart = (id) => {
-    let filter = cart.filter((product) => product.id != id)
-    let tot = filter.reduce((acc, product) => acc + product.product_price, 0)
-    setTotal_Price(tot)
-  }
-
 
 
 
@@ -70,7 +62,17 @@ function Navbar({ cartCount, cart, removeCart, increase_CartQuantity, decrease_C
               <MdOutlineLocalGroceryStore className="cart_icon" />Cart <span className="cart_count">{cartCount}</span>
             </Button>
 
-            <Cartmodal handleClose={handleClose} show={show} cart={cart} removeCart={removeCart} total_price={total_price} lessTotal_Cart={lessTotal_Cart} increase_CartQuantity={increase_CartQuantity} decrease_CartQuantity={decrease_CartQuantity} />
+            <Cartmodal
+              handleClose={handleClose}
+              show={show}
+              cart={cart}
+              removeCart={removeCart}
+              total_price={total_price}
+              increase_CartQuantity={increase_CartQuantity}
+              decrease_CartQuantity={decrease_CartQuantity}
+              cartQuantity={cartQuantity}
+              setCartQuantity={setCartQuantity}
+            />
 
           </div>
         </div>
