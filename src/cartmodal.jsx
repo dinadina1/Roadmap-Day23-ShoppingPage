@@ -34,9 +34,9 @@ function Cartmodal({ handleClose, show, cart, removeCart,
                                             <img src={item.product_img} alt="" />
                                         </div>
 
-                                        <span className="badge text-bg-primary rounded-pill me-3 mt-4 fw-bold" onClick={() => { decrease_CartQuantity(`${item.id},${item.quantity},${item.product_price}`) }}>-</span>
+                                        <a href="#"><span className="badge text-bg-primary rounded-pill me-3 mt-4 fw-bold" onClick={() => { decrease_CartQuantity(`${item.id},${item.quantity},${item.product_price}`) }}>-</span></a>
                                         <p className='me-3 mt-4 fw-bold'>{item.quantity}</p>
-                                        <span className="badge text-bg-primary rounded-pill me-3 mt-4" onClick={() => { increase_CartQuantity(`${item.id},${item.quantity},${item.product_price}`) }}>+</span>
+                                        <a href="#"><span className="badge text-bg-primary rounded-pill me-3 mt-4" onClick={() => { increase_CartQuantity(`${item.id},${item.quantity},${item.product_price}`) }}>+</span></a>
 
                                         <p className='me-3 mt-4 fw-bold'>&#8377;{item.product_price}</p>
                                         <MdDelete className='delete_button mt-4 fw-bold' onClick={() => {
